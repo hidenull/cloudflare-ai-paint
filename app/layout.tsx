@@ -21,7 +21,17 @@ export const metadata: Metadata = {
   },
   formatDetection: {
     telephone: false,
-  }
+  },
+};
+
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#fafafa" },
+    { media: "(prefers-color-scheme: dark)", color: "#151515" },
+  ],
 };
 
 export default function RootLayout({
@@ -38,7 +48,6 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="apple-mobile-web-app-title" content={APP_DEFAULT_TITLE} />
-        <meta name="theme-color" content="#000000" />
       </head>
       <body>{children}</body>
     </html>

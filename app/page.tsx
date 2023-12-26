@@ -1,10 +1,18 @@
 "use client";
-import { Image, App, Button, ConfigProvider, Flex, FloatButton, Input, Spin, Tooltip, message, theme, Timeline, Card } from 'antd';
 import { useEffect, useState } from 'react';
-import type { TimelineProps } from 'antd';
-import DeleteOutlined from '@ant-design/icons/lib/icons/DeleteOutlined';
-
-const { Search } = Input;
+import dynamic from 'next/dynamic';
+import {message,theme,TimelineProps,Button} from 'antd';
+const DynamicImage = dynamic(() => import('antd').then(mod => mod.Image), { loading: () => <p>Loading...</p>, ssr: false });
+const DynamicFlex = dynamic(() => import('antd').then(mod => mod.Flex), { ssr: false });
+const DynamicFloatButton = dynamic(() => import('antd').then(mod => mod.FloatButton), { ssr: false });
+const DynamicSearch = dynamic(() => import('antd').then(mod => mod.Input.Search), { ssr: false });
+const DynamicTooltip = dynamic(() => import('antd').then(mod => mod.Tooltip), { ssr: false });
+const DynamicTimeline = dynamic(() => import('antd').then(mod => mod.Timeline), { ssr: false });
+const DynamicCard = dynamic(() => import('antd').then(mod => mod.Card), { ssr: false });
+const DynamicApp = dynamic(() => import('antd').then(mod => mod.App), { ssr: false });
+const DynamicDeleteOutlined = dynamic(() => import('@ant-design/icons').then(icons => icons.DeleteOutlined), {ssr: false,});
+const DynamicSpin = dynamic(() => import('antd').then(mod => mod.Spin), { ssr: false });
+const DynamicConfigProvider = dynamic(() => import('antd').then(mod => mod.ConfigProvider), { ssr: false });
 
 export default function Home() {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -102,14 +110,14 @@ export default function Home() {
         setItems(prevItems => [...(prevItems || []), {
           key: image_url,
           children: (
-            <Card
+            <DynamicCard
               hoverable={true}
               size="small"
-              title={<Tooltip title={inputText}><span>{inputText.length > 15 ? `${inputText.slice(0, 15)}...` : inputText}</span></Tooltip>}
-              extra={deletingImageURL == image_url ? <Spin /> : <DeleteOutlined onClick={() => handleDeleteImage(image_url)} />}
+              title={<DynamicTooltip title={inputText}><span>{inputText.length > 15 ? `${inputText.slice(0, 15)}...` : inputText}</span></DynamicTooltip>}
+              extra={deletingImageURL == image_url ? <DynamicSpin /> : <DynamicDeleteOutlined onClick={() => handleDeleteImage(image_url)} />}
             >
-              <Image src={image_url} alt={image_url} height={200} width={200} />
-            </Card>
+              <DynamicImage loading='lazy' src={image_url} alt={image_url} height={200} width={200} />
+            </DynamicCard>
           ),
         }]);
         message.success("生成成功");
@@ -127,9 +135,9 @@ export default function Home() {
   }
 
   const translateSuffix = (
-    <Tooltip title={translationLoading ? '翻译中' : '翻译为英文,提高模型效率'}>
-      {translationLoading || generationLoading ||deletingImageURL!=''? <Spin /> : <Image preview={false} onClick={handleTranslateText} src='/translate.svg' alt="Translate" width={20} height={20} style={{ userSelect: 'none' }} />}
-    </Tooltip>
+    <DynamicTooltip title={translationLoading ? '翻译中' : '翻译为英文,提高模型效率'}>
+      {translationLoading || generationLoading ||deletingImageURL!=''? <DynamicSpin /> : <DynamicImage preview={false} onClick={handleTranslateText} src='/translate.svg' alt="Translate" width={20} height={20} style={{ userSelect: 'none' }} />}
+    </DynamicTooltip>
   );
 
   useEffect(() => {
@@ -147,14 +155,14 @@ export default function Home() {
           setItems(prevItems => [...(prevItems || []), {
             key: item.image_url, // Use the image_url as the key
             children: (
-              <Card
+              <DynamicCard
                 hoverable={true}
                 size="small"
-                title={<Tooltip title={item.prompt}><span>{item.prompt.length > 15 ? `${item.prompt.slice(0, 15)}...` : item.prompt}</span></Tooltip>}
-                extra={deletingImageURL == item.image_url ? <Spin /> : <DeleteOutlined onClick={() => handleDeleteImage(item.image_url)} />}
+                title={<DynamicTooltip title={item.prompt}><span>{item.prompt.length > 15 ? `${item.prompt.slice(0, 15)}...` : item.prompt}</span></DynamicTooltip>}
+                extra={deletingImageURL == item.image_url ? <DynamicSpin /> : <DynamicDeleteOutlined onClick={() => handleDeleteImage(item.image_url)} />}
               >
-                <Image src={item.image_url} alt={item.image_url} height={200} width={200} />
-              </Card>
+                <DynamicImage loading='lazy' src={item.image_url} alt={item.image_url} height={200} width={200} />
+              </DynamicCard>
             ),
           }]);
         } else {
@@ -170,7 +178,7 @@ export default function Home() {
   }, []);
 
   return (
-    <ConfigProvider
+    <DynamicConfigProvider
       theme={{
         algorithm: isDarkMode ? theme.darkAlgorithm : theme.defaultAlgorithm,
         token: {},
@@ -178,45 +186,59 @@ export default function Home() {
           Button: {
             primaryColor: isDarkMode ? '#white' : 'black',
           },
-        }
+        },
       }}
     >
-      <App style={{ width: '100vw', height: '100vh' }}>
-        <FloatButton
-          onClick={() => { setIsDarkMode(!isDarkMode); localStorage.setItem('isDarkMode', isDarkMode ? 'false' : 'true'); }}
+      <DynamicApp style={{ width: '100vw', height: '100vh' }}>
+        <DynamicFloatButton
+          onClick={() => {
+            setIsDarkMode(!isDarkMode);
+            localStorage.setItem('isDarkMode', isDarkMode ? 'false' : 'true');
+          }}
           description={isDarkMode ? '暗' : '明'}
           tooltip={isDarkMode ? '切换到明亮模式' : '切换到黑夜模式'}
           shape={'square'}
         />
-        <Flex style={{
-          backgroundColor: isDarkMode ? 'black' : 'white',
-          height: '100%',
-          width: '100%',
-          overflowY: 'auto',
-          alignItems: 'center',
-          justifyContent: items && items.length === 0 ? 'center' : undefined,
-        }}
+        <DynamicFlex
+          style={{
+            backgroundColor: isDarkMode ? 'black' : 'white',
+            height: '100%',
+            width: '100%',
+            overflowY: 'auto',
+            alignItems: 'center',
+            justifyContent: items && items.length === 0 ? 'center' : undefined,
+          }}
           vertical
         >
-          <Search
+          <DynamicSearch
             placeholder="请输入指示词"
-            enterButton={<Button type='primary' loading={generationLoading || translationLoading || deletingImageURL!=''} onClick={handleGenerateImage}>生成</Button>}
+            enterButton={
+              <Button
+                type="primary"
+                loading={generationLoading || translationLoading || deletingImageURL !== ''}
+                onClick={handleGenerateImage}
+              >
+                生成
+              </Button>
+            }
             size="large"
             value={inputText}
-            onChange={(e) => { setInputText(e.target.value); }}
+            onChange={(e) => {
+              setInputText(e.target.value);
+            }}
             suffix={translateSuffix}
             style={{
               boxShadow: isDarkMode ? '0px 0px 8px rgba(255, 255, 255, 0.4)' : '0px 0px 8px rgba(0, 0, 0, 0.4)',
               borderRadius: '5px',
               width: '50vw',
               minWidth: '350px',
-              marginTop: '8vh'
+              marginTop: '8vh',
             }}
-            readOnly={generationLoading || translationLoading || deletingImageURL!=''}
+            readOnly={generationLoading || translationLoading || deletingImageURL !== ''}
           />
-          <Timeline mode='left' items={items} reverse={true} style={{ marginTop: '5vh' }} />
-        </Flex>
-      </App>
-    </ConfigProvider>
+          <DynamicTimeline mode="left" items={items} reverse={true} style={{ marginTop: '5vh' }} />
+        </DynamicFlex>
+      </DynamicApp>
+    </DynamicConfigProvider>
   )
 }
