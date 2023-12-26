@@ -15,7 +15,7 @@ const DynamicTooltip = dynamic(() => import('antd').then(mod => mod.Tooltip), { 
 const DynamicFloatButton = dynamic(() => import('antd').then(mod => mod.FloatButton), { ssr: false });
 
 export default function Home() {
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(true);
   const [translationLoading, setTranslationLoading] = useState(false);
   const [generationLoading, setGenerationLoading] = useState(false);
   const [deletingImageURL, setDeletingImageURL] = useState('');
