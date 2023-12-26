@@ -1,18 +1,18 @@
 "use client";
 import { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
-import {message,theme,TimelineProps,Button} from 'antd';
+import {message,theme,TimelineProps,Button,Spin} from 'antd';
+
+const DynamicConfigProvider = dynamic(() => import('antd').then(mod => mod.ConfigProvider), {loading: () => <Spin />,ssr:false});
+const DynamicApp = dynamic(async() => (await import('antd').then(mod => mod.App)), {loading: () => <Spin />,ssr:false});
+const DynamicFlex = dynamic(async() => (await import('antd').then(mod => mod.Flex)), {loading: () => <Spin />,ssr:false});
+const DynamicCard = dynamic(async() => (await import('antd').then(mod => mod.Card)), {loading: () => <Spin />,ssr:false});
+const DynamicSearch = dynamic(async () => (await import("antd").then(mod => mod.Input)).Search, {loading: () => <Spin />,ssr:false});
 const DynamicImage = dynamic(() => import('antd').then(mod => mod.Image), { loading: () => <p>Loading...</p>, ssr: false });
-const DynamicFlex = dynamic(() => import('antd').then(mod => mod.Flex), { ssr: false });
-const DynamicFloatButton = dynamic(() => import('antd').then(mod => mod.FloatButton), { ssr: false });
-const DynamicSearch = dynamic(() => import('antd').then(mod => mod.Input.Search), { ssr: false });
-const DynamicTooltip = dynamic(() => import('antd').then(mod => mod.Tooltip), { ssr: false });
-const DynamicTimeline = dynamic(() => import('antd').then(mod => mod.Timeline), { ssr: false });
-const DynamicCard = dynamic(() => import('antd').then(mod => mod.Card), { ssr: false });
-const DynamicApp = dynamic(() => import('antd').then(mod => mod.App), { ssr: false });
 const DynamicDeleteOutlined = dynamic(() => import('@ant-design/icons').then(icons => icons.DeleteOutlined), {ssr: false,});
-const DynamicSpin = dynamic(() => import('antd').then(mod => mod.Spin), { ssr: false });
-const DynamicConfigProvider = dynamic(() => import('antd').then(mod => mod.ConfigProvider), { ssr: false });
+const DynamicTimeline = dynamic(() => import('antd').then(mod => mod.Timeline), { ssr: false });
+const DynamicTooltip = dynamic(() => import('antd').then(mod => mod.Tooltip), { ssr: false });
+const DynamicFloatButton = dynamic(() => import('antd').then(mod => mod.FloatButton), { ssr: false });
 
 export default function Home() {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -114,7 +114,7 @@ export default function Home() {
               hoverable={true}
               size="small"
               title={<DynamicTooltip title={inputText}><span>{inputText.length > 15 ? `${inputText.slice(0, 15)}...` : inputText}</span></DynamicTooltip>}
-              extra={deletingImageURL == image_url ? <DynamicSpin /> : <DynamicDeleteOutlined onClick={() => handleDeleteImage(image_url)} />}
+              extra={deletingImageURL == image_url ? <Spin /> : <DynamicDeleteOutlined onClick={() => handleDeleteImage(image_url)} />}
             >
               <DynamicImage loading='lazy' src={image_url} alt={image_url} height={200} width={200} />
             </DynamicCard>
@@ -136,7 +136,7 @@ export default function Home() {
 
   const translateSuffix = (
     <DynamicTooltip title={translationLoading ? '翻译中' : '翻译为英文,提高模型效率'}>
-      {translationLoading || generationLoading ||deletingImageURL!=''? <DynamicSpin /> : <DynamicImage preview={false} onClick={handleTranslateText} src='/translate.svg' alt="Translate" width={20} height={20} style={{ userSelect: 'none' }} />}
+      {translationLoading || generationLoading ||deletingImageURL!=''? <Spin /> : <DynamicImage preview={false} onClick={handleTranslateText} src='/translate.svg' alt="Translate" width={20} height={20} style={{ userSelect: 'none' }} />}
     </DynamicTooltip>
   );
 
@@ -159,7 +159,7 @@ export default function Home() {
                 hoverable={true}
                 size="small"
                 title={<DynamicTooltip title={item.prompt}><span>{item.prompt.length > 15 ? `${item.prompt.slice(0, 15)}...` : item.prompt}</span></DynamicTooltip>}
-                extra={deletingImageURL == item.image_url ? <DynamicSpin /> : <DynamicDeleteOutlined onClick={() => handleDeleteImage(item.image_url)} />}
+                extra={deletingImageURL == item.image_url ? <Spin /> : <DynamicDeleteOutlined onClick={() => handleDeleteImage(item.image_url)} />}
               >
                 <DynamicImage loading='lazy' src={item.image_url} alt={item.image_url} height={200} width={200} />
               </DynamicCard>
