@@ -170,7 +170,7 @@ export default function Indication({ isDarkMode }: { isDarkMode: boolean }) {
                                 width: '60px',
                                 marginLeft: '8px'
                             }}
-                        >Run</Button>
+                        >{(generationLoading || translationLoading)?"":"Run"}</Button>
                     </>
                 }
             </div>
