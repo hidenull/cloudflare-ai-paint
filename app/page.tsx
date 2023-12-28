@@ -5,7 +5,7 @@ import Indication from './components/Indication';
 import ConfigProvider from 'antd/lib/config-provider';
 import App from 'antd/lib/app';
 import FloatButton from 'antd/lib/float-button';
-
+export const runtime = 'edge';
 export default function Home() {
   const [isDarkMode, setIsDarkMode] = useState(true);
 
