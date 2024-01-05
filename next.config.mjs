@@ -5,6 +5,10 @@ const withPWA = withPWAInit({
 const nextConfig = {
   experimental: {
     forceSwcTransforms: true,
+    serverActions: {
+			allowedForwardedHosts: ['localhost'],
+			allowedOrigins: ['http://localhost']
+		},
   },
 };
 

@@ -12,7 +12,6 @@ export default async function GenerateAction(prompt: string): Promise<GenerateRe
     "use server";
     try{
         const header = headers();
-        console.log("请求头: ",header);
 
         const ai = new Ai(process.env.AI);
         
